@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace AutoRepair.Objects
@@ -31,5 +32,34 @@ namespace AutoRepair.Objects
       _id = id;
     }
 
+    public static List<Mechanic> GetAll()
+    {
+      List<Mechanic> allMechanic = new List<Mechanic> {};
+
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      string statement = "SELECT * FROM mechanics;";
+      SqlCommand cmd = new SqlCommand(statement, conn);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        string MechanicName = rdr.GetString(0);
+        int MechanicId = rdr.GetInt32(1);
+        Mechanic newMechanic = new Mechanic(MechanicName, MechanicId);
+        allMechanic.Add(newMechanic);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
+      return allMechanic;
+    }
   }
 }
