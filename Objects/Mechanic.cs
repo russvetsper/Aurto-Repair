@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
+
 using System.Data.SqlClient;
 
 namespace AutoRepair.Objects
@@ -52,7 +52,7 @@ namespace AutoRepair.Objects
      return this.GetName().GetHashCode();
    }
 
-    public static List<Mechanic> GetAll()
+   public static List<Mechanic> GetAll()
     {
       List<Mechanic> allMechanic = new List<Mechanic> {};
 
@@ -65,8 +65,8 @@ namespace AutoRepair.Objects
 
       while (rdr.Read())
       {
-        string MechanicName = rdr.GetString(0);
-        int MechanicId = rdr.GetInt32(1);
+        int MechanicId = rdr.GetInt32(0);
+        string MechanicName = rdr.GetString(1);
         Mechanic newMechanic = new Mechanic(MechanicName, MechanicId);
         allMechanic.Add(newMechanic);
       }
@@ -80,6 +80,65 @@ namespace AutoRepair.Objects
       }
 
       return allMechanic;
+    }
+    public void Save()
+     {
+       SqlConnection conn = DB.Connection();
+       conn.Open();
+
+       SqlCommand cmd = new SqlCommand("INSERT INTO mechanics (name) OUTPUT INSERTED.id VALUES (@MechanicName);", conn);
+
+       SqlParameter nameParameter = new SqlParameter();
+       nameParameter.ParameterName = "@MechanicName";
+       nameParameter.Value = this.GetName();
+       cmd.Parameters.Add(nameParameter);
+       SqlDataReader rdr = cmd.ExecuteReader();
+
+       while(rdr.Read())
+       {
+         this._id = rdr.GetInt32(0);
+       }
+       if (rdr != null)
+       {
+         rdr.Close();
+       }
+       if (conn != null)
+       {
+         conn.Close();
+       }
+     }
+
+     public static Mechanic Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      string statement = "SELECT * FROM mechanics WHERE id = @MechanicId;";
+      SqlCommand cmd = new SqlCommand(statement, conn);
+      SqlParameter MechanicIdParameter = new SqlParameter();
+      MechanicIdParameter.ParameterName = "@MechanicId";
+      MechanicIdParameter.Value = id.ToString();
+      cmd.Parameters.Add(MechanicIdParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int foundMechanicId = 0;
+      string foundMechanicName = null;
+
+      while(rdr.Read() )
+      {
+        foundMechanicId = rdr.GetInt32(0);
+        foundMechanicName = rdr.GetString(1);
+      }
+      Mechanic foundMechanic = new Mechanic(foundMechanicName, foundMechanicId);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundMechanic;
     }
   }
 }
