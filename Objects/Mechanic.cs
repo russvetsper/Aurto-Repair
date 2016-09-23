@@ -32,6 +32,21 @@ namespace AutoRepair.Objects
       _id = id;
     }
 
+    public override bool Equals(System.Object otherMechanic)
+    {
+      if (!(otherMechanic is Mechanic))
+      {
+        return false;
+      }
+      else
+      {
+        Mechanic newMechanic = (Mechanic) otherMechanic;
+        bool idEquality = (this.GetId() == newMechanic.GetId());
+        bool nameEquality = (this.GetName() == newMechanic.GetName());
+        return (idEquality && nameEquality);
+      }
+    }
+
     public static List<Mechanic> GetAll()
     {
       List<Mechanic> allMechanic = new List<Mechanic> {};
