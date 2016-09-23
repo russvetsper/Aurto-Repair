@@ -61,5 +61,28 @@ namespace AutoRepair.Objects
 
       return allClients;
     }
+
+    public override bool Equals(System.Object otherClients)
+    {
+      if (!(otherClients is Clients))
+      {
+        return false;
+      }
+      else
+      {
+        Clients newClients = (Clients) otherClients;
+        bool idEquality = (this.GetId() == newClients.GetId());
+        bool nameEquality = (this.GetName() == newClients.GetName());
+        return (idEquality && nameEquality);
+      }
+    }
+
+    public override int GetHashCode()
+    {
+      return this.GetName().GetHashCode();
+    }
+
+
+
   }
 }

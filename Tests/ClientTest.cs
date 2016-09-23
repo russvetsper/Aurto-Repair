@@ -16,12 +16,20 @@ namespace AutoRepair
     }
 
     [Fact]
-    public void Test1_DatabaseEmpty_true()
+    public void Test6_DatabaseEmpty_true()
     {
       int table = Clients.GetAll().Count;
 
       Assert.Equal(0, table);
     }
+
+    [Fact]
+      public void Test2_CheckEqualsOverride()
+      {
+        Clients firstClients = new Clients ("Joe");
+        Clients secondClients = new Clients ("Joe");
+        Assert.Equal(firstClients, secondClients);
+      }
 
   }
 }
