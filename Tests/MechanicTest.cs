@@ -8,7 +8,7 @@ using AutoRepair.Objects;
 
 namespace AutoRepair
 {
-  public class MechanicTest// : IDisposable
+  public class MechanicTest : IDisposable
   {
     public MechanicTest()
     {
@@ -48,25 +48,25 @@ namespace AutoRepair
     Assert.Equal(testId, result);
   }
 
-    //  [Fact]
-    //   public void Test4_DeleteAll_true()
-    //   {
-    //     //Arrange
-    //     Mechanic newMechanicOne = new Mechanic ("Joe");
-    //     Mechanic newMechanicTwo = new Mechanic ("Mike");
-    //     newMechanicOne.Save();
-    //     newMechanicTwo.Save();
-    //     //Act
-    //     Mechanic.DeleteAll();
-    //     List<Mechanic> result = Mechanic.GetAll();
-    //     //Assert
-    //     Assert.Equal(0 , result.Count);
-    //   }
+     [Fact]
+      public void Test4_DeleteAll_true()
+      {
+        //Arrange
+        Mechanic newMechanicOne = new Mechanic ("Joe");
+        Mechanic newMechanicTwo = new Mechanic ("Mike");
+        newMechanicOne.Save();
+        newMechanicTwo.Save();
+        //Act
+        Mechanic.DeleteAll();
+        List<Mechanic> result = Mechanic.GetAll();
+        //Assert
+        Assert.Equal(0 , result.Count);
+      }
 
-    //  public void Dispose()
-    //  {
-    //    Mechanic.DeleteAll();
-    //  }
+     public void Dispose()
+     {
+       Mechanic.DeleteAll();
+     }
 
   }
 }

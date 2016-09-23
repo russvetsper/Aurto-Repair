@@ -48,11 +48,11 @@ namespace AutoRepair.Objects
     }
 
     public override int GetHashCode()
-   {
-     return this.GetName().GetHashCode();
-   }
+    {
+      return this.GetName().GetHashCode();
+    }
 
-   public static List<Mechanic> GetAll()
+    public static List<Mechanic> GetAll()
     {
       List<Mechanic> allMechanic = new List<Mechanic> {};
 
@@ -82,33 +82,33 @@ namespace AutoRepair.Objects
       return allMechanic;
     }
     public void Save()
-     {
-       SqlConnection conn = DB.Connection();
-       conn.Open();
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
 
-       SqlCommand cmd = new SqlCommand("INSERT INTO mechanics (name) OUTPUT INSERTED.id VALUES (@MechanicName);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO mechanics (name) OUTPUT INSERTED.id VALUES (@MechanicName);", conn);
 
-       SqlParameter nameParameter = new SqlParameter();
-       nameParameter.ParameterName = "@MechanicName";
-       nameParameter.Value = this.GetName();
-       cmd.Parameters.Add(nameParameter);
-       SqlDataReader rdr = cmd.ExecuteReader();
+      SqlParameter nameParameter = new SqlParameter();
+      nameParameter.ParameterName = "@MechanicName";
+      nameParameter.Value = this.GetName();
+      cmd.Parameters.Add(nameParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
 
-       while(rdr.Read())
-       {
-         this._id = rdr.GetInt32(0);
-       }
-       if (rdr != null)
-       {
-         rdr.Close();
-       }
-       if (conn != null)
-       {
-         conn.Close();
-       }
-     }
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
 
-     public static Mechanic Find(int id)
+    public static Mechanic Find(int id)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
@@ -139,6 +139,15 @@ namespace AutoRepair.Objects
         conn.Close();
       }
       return foundMechanic;
+    }
+
+    public static void DeleteAll()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM mechanics;", conn);
+      cmd.ExecuteNonQuery();
+      conn.Close();
     }
   }
 }
