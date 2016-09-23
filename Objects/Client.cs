@@ -9,11 +9,14 @@ namespace AutoRepair.Objects
   {
     private string _name;
     private int _id;
+    private int _mechanicId;
 
-    public Clients(string name, int id = 0)
+    public Clients(string name, int mechanicId, int id = 0)
     {
-      _name = name;
       _id = id;
+      _name = name;
+      _mechanicId = mechanicId;
+
     }
     public string GetName()
     {
@@ -31,6 +34,14 @@ namespace AutoRepair.Objects
     {
       _id = id;
     }
+    public int GetMechanicId()
+     {
+       return _mechanicId;
+     }
+     public void SetMechanicId(int mechanicId)
+     {
+       _mechanicId = mechanicId;
+     }
 
     public static List<Clients> GetAll()
     {
@@ -47,7 +58,8 @@ namespace AutoRepair.Objects
       {
         int ClientsId = rdr.GetInt32(0);
         string ClientsName = rdr.GetString(1);
-        Clients newClients = new Clients(ClientsName, ClientsId);
+        int ClientsMechanicId = rdr.GetInt32(2);
+        Clients newClients = new Clients(ClientsName, ClientsMechanicId, ClientsId);
         allClients.Add(newClients);
       }
       if (rdr != null)
@@ -73,7 +85,8 @@ namespace AutoRepair.Objects
         Clients newClients = (Clients) otherClients;
         bool idEquality = (this.GetId() == newClients.GetId());
         bool nameEquality = (this.GetName() == newClients.GetName());
-        return (idEquality && nameEquality);
+        bool mechanicEquality = this.GetMechanicId() == newClients.GetMechanicId();
+        return (idEquality && nameEquality && mechanicEquality);
       }
     }
 
@@ -84,18 +97,24 @@ namespace AutoRepair.Objects
 
 
     public void Save()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
+ {
+   SqlConnection conn = DB.Connection();
+   conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO clients (name) OUTPUT INSERTED.id VALUES (@ClientsName);", conn);
+   SqlCommand cmd = new SqlCommand("INSERT INTO clients (name, mechanic_id) OUTPUT INSERTED.id VALUES (@ClientName, @ClientMechanicId);", conn);
 
-      SqlParameter nameParameter = new SqlParameter();
-      nameParameter.ParameterName = "@ClientsName";
-      nameParameter.Value = this.GetName();
-      cmd.Parameters.Add(nameParameter);
-      SqlDataReader rdr = cmd.ExecuteReader();
+   SqlParameter nameParameter = new SqlParameter();
+   nameParameter.ParameterName = "@ClientName";
+   nameParameter.Value = this.GetName();
+   cmd.Parameters.Add(nameParameter);
 
+   SqlParameter mechanicIdParameter = new SqlParameter();
+   mechanicIdParameter.ParameterName = "@ClientMechanicId";
+   mechanicIdParameter.Value = this.GetMechanicId();
+   cmd.Parameters.Add(mechanicIdParameter);
+
+
+   SqlDataReader rdr = cmd.ExecuteReader();
       while(rdr.Read())
       {
         this._id = rdr.GetInt32(0);
@@ -111,37 +130,40 @@ namespace AutoRepair.Objects
     }
 
     public static Clients Find(int id)
-   {
-     SqlConnection conn = DB.Connection();
-     conn.Open();
-     string statement = "SELECT * FROM clients WHERE id = @ClientsId;";
-     SqlCommand cmd = new SqlCommand(statement, conn);
-     SqlParameter ClientsIdParameter = new SqlParameter();
-     ClientsIdParameter.ParameterName = "@ClientsId";
-     ClientsIdParameter.Value = id.ToString();
-     cmd.Parameters.Add(ClientsIdParameter);
-     SqlDataReader rdr = cmd.ExecuteReader();
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
 
-     int foundClientsId = 0;
-     string foundClientsName = null;
+      string statement = "SELECT * FROM clients WHERE id = @ClientsId;";
+      SqlCommand cmd = new SqlCommand(statement, conn);
+      SqlParameter mechanicIdParameter = new SqlParameter();
+      mechanicIdParameter.ParameterName = "@ClientsId";
+      mechanicIdParameter.Value = id.ToString();
+      cmd.Parameters.Add(mechanicIdParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
 
-     while(rdr.Read() )
-     {
-       foundClientsId = rdr.GetInt32(0);
-       foundClientsName = rdr.GetString(1);
-     }
-     Clients foundClients = new Clients(foundClientsName, foundClientsId);
+      int foundClientsId = 0;
+      string foundClientsName = null;
+      int foundClientMechanicId = 0;
 
-     if (rdr != null)
-     {
-       rdr.Close();
-     }
-     if (conn != null)
-     {
-       conn.Close();
-     }
-     return foundClients;
-   }
+      while(rdr.Read() )
+      {
+        foundClientsId = rdr.GetInt32(0);
+        foundClientsName = rdr.GetString(1);
+        foundClientMechanicId = rdr.GetInt32(2);
+      }
+      Clients foundClients = new Clients(foundClientsName, foundClientMechanicId, foundClientsId);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundClients;
+    }
 
     public static void DeleteAll()
     {

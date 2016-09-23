@@ -26,8 +26,8 @@ namespace AutoRepair
     [Fact]
       public void Test7_CheckEqualsOverride()
       {
-        Clients firstClients = new Clients ("Joe");
-        Clients secondClients = new Clients ("Joe");
+        Clients firstClients = new Clients ("Mike", 1);
+        Clients secondClients = new Clients ("Mike", 1);
         Assert.Equal(firstClients, secondClients);
       }
 
@@ -35,7 +35,7 @@ namespace AutoRepair
       public void Test8_Save()
       {
       //Arrange
-      Clients testClients = new Clients("Russ");
+      Clients testClients = new Clients("Mike", 1);
 
       //Act
       testClients.Save();
@@ -52,8 +52,8 @@ namespace AutoRepair
        public void Test_DeleteAll_true()
        {
          //Arrange
-         Clients newClientsOne = new Clients ("Joe");
-         Clients newClientsTwo = new Clients ("Mike");
+         Clients newClientsOne = new Clients ("Joe",1);
+         Clients newClientsTwo = new Clients ("Mike",2);
          newClientsOne.Save();
          newClientsTwo.Save();
          //Act

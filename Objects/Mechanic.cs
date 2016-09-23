@@ -185,5 +185,37 @@ namespace AutoRepair.Objects
       cmd.ExecuteNonQuery();
       conn.Close();
     }
+
+    public List<Clients> GetClients()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE mechanic_id = @MechanicId;", conn);
+      SqlParameter stylistIdParameter = new SqlParameter();
+      stylistIdParameter.ParameterName = "@MechanicId";
+      stylistIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(stylistIdParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      List<Clients> clients = new List<Clients> {};
+      while(rdr.Read())
+      {
+        int clientsId = rdr.GetInt32(0);
+        string clientsName = rdr.GetString(1);
+        int clientsMechanicId = rdr.GetInt32(2);
+        Clients newClients = new Clients(clientsName, clientsMechanicId, clientsId);
+        clients.Add(newClients);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return clients;
+    }
   }
 }
