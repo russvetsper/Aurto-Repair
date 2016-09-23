@@ -141,6 +141,42 @@ namespace AutoRepair.Objects
       return foundMechanic;
     }
 
+
+    public void Update(string newName)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE mechanics SET name = @NewName OUTPUT INSERTED.name WHERE id = @MechanicId;", conn);
+
+      SqlParameter newNameParameter = new SqlParameter();
+      newNameParameter.ParameterName = "@NewName";
+      newNameParameter.Value = newName;
+      cmd.Parameters.Add(newNameParameter);
+
+
+      SqlParameter MechanicIdParameter = new SqlParameter();
+      MechanicIdParameter.ParameterName = "@MechanicId";
+      MechanicIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(MechanicIdParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._name = rdr.GetString(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();

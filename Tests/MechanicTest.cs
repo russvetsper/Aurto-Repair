@@ -63,6 +63,25 @@ namespace AutoRepair
         Assert.Equal(0 , result.Count);
       }
 
+      [Fact]
+    public void Test5_UpdateMechanic()
+    {
+      //Arrange
+      string name = "Mike";
+      Mechanic testMechanic = new Mechanic(name);
+      testMechanic.Save();
+      string newName = "Joe";
+
+      //Act
+      testMechanic.Update(newName);
+
+      string result = testMechanic.GetName();
+
+      //Assert
+      Assert.Equal(newName, result);
+    }
+
+
      public void Dispose()
      {
        Mechanic.DeleteAll();
