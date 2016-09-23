@@ -47,6 +47,11 @@ namespace AutoRepair.Objects
       }
     }
 
+    public override int GetHashCode()
+   {
+     return this.GetName().GetHashCode();
+   }
+
     public static List<Mechanic> GetAll()
     {
       List<Mechanic> allMechanic = new List<Mechanic> {};

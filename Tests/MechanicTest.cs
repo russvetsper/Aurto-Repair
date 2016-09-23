@@ -23,5 +23,13 @@ namespace AutoRepair
       Assert.Equal(0, table);
     }
 
+    [Fact]
+      public void Test2_CheckEqualsOverride()
+      {
+        Mechanic firstMechanic = new Mechanic ("Joe");
+        Mechanic secondMechanic = new Mechanic ("Joe");
+        Assert.Equal(firstMechanic, secondMechanic);
+      }
+
   }
 }
