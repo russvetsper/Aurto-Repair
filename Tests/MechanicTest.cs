@@ -31,9 +31,9 @@ namespace AutoRepair
         Assert.Equal(firstMechanic, secondMechanic);
       }
 
-      [Fact]
-  public void Test3_Save()
-  {
+    [Fact]
+    public void Test3_Save()
+    {
     //Arrange
     Mechanic testMechanic = new Mechanic("Russ");
 
@@ -46,7 +46,7 @@ namespace AutoRepair
 
     //Assert
     Assert.Equal(testId, result);
-  }
+    }
 
      [Fact]
       public void Test4_DeleteAll_true()
