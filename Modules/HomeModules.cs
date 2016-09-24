@@ -30,15 +30,17 @@ namespace AutoRepair
         return View["confirm.cshtml"];
       };
 
-      Get["mechanic/delete/{id}"] = parameters => {
-      mechanic SelectedMechanic = mechanic.Find(parameters.id);
-      return View["mechanic_delete.cshtml", SelectedMechanic];
+      Get["mechanic/edit/{id}"] = parameters => {
+        Mechanic SelectedMechanic = Mechanic.Find(parameters.id);
+        return View["mechanic_edit.cshtml", SelectedMechanic];
       };
-      Delete["mechanic/delete/{id}"] = parameters => {
-        mechanic SelectedMechanic = mechanic.Find(parameters.id);
-        SelectedMechanic.Delete();
+
+      Patch["mechanic/edit/{id}"] = parameters => {
+        Mechanic SelectedMechanic = Mechanic.Find(parameters.id);
+        SelectedMechanic.Update(Request.Form["mechanic-name"]);
         return View["confirm.cshtml"];
       };
+
 
 
     }

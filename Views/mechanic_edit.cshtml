@@ -1,0 +1,11 @@
+<h1>HairSalon List</h1>
+
+<h3>Edit Mechanic: @Model.GetName()</h3>
+<form action="/mechanic/edit/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <input name="mechanic-id" type="hidden" value="@Model.GetId()">
+  <label for="mechanic-name">Mechanic name</label>
+  <input id="mechanic-name" name="mechanic-name" type="text">
+  <button type="submit">Submit</button>
+</form>
+<h4><a href="/">Return home</a></h4>

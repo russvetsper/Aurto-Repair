@@ -82,19 +82,39 @@ namespace AutoRepair
     }
 
     [Fact]
-     public void TEst6_DeleteOne()
-     {
-       //Assert
-       Mechanic oneMechanic = new Mechanic("Mike");
-       Mechanic twoMechanic = new Mechanic("Joe");
-       oneMechanic.Save();
-       twoMechanic.Save();
-       // Act
-       oneMechanic.Delete();
-       List<Mechanic> result = Mechanic.GetAll();
-       //Assert
-       Assert.Equal(1, result.Count);
-     }
+    public void Test6_Delete()
+    {
+      Mechanic firstMechanic = new Mechanic("Russ");
+      firstMechanic.Save();
+
+      Mechanic secondMechanic = new Mechanic("Rouz");
+      secondMechanic.Save();
+
+      firstMechanic.Delete();
+      List<Mechanic> allMechanics = Mechanic.GetAll();
+      List<Mechanic> afterDeleteFristMechanic = new List<Mechanic> {secondMechanic};
+
+      Assert.Equal(afterDeleteFristMechanic, allMechanics);
+    }
+
+    [Fact]
+   public void Test7_GetMechanicAndMechanic()
+   {
+     Mechanic testMechanic = new Mechanic("Russ");
+     testMechanic.Save();
+
+     Clients firstClients = new Clients("Joe", testMechanic.GetId());
+     firstClients.Save();
+     Clients secondClients = new Clients("Rouz", testMechanic.GetId());
+     secondClients.Save();
+
+
+     List<Clients> testClientsList = new List<Clients> {firstClients, secondClients};
+     List<Clients> resultClientsList = testMechanic.GetClients();
+
+     Assert.Equal(testClientsList, resultClientsList);
+   }
+
 
 
      public void Dispose()

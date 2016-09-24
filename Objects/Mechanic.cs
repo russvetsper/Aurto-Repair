@@ -187,21 +187,24 @@ namespace AutoRepair.Objects
     }
 
     public void Delete()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-      SqlCommand cmd = new SqlCommand ("DELETE FROM mechanics WHERE id =@MechanicId;", conn);
+   {
+     SqlConnection conn = DB.Connection();
+     conn.Open();
 
-      SqlParameter mechanicIdParameter = new SqlParameter();
-      mechanicIdParameter.ParameterName = "@MechanicId";
-      mechanicIdParameter.Value = this.GetId();
-      cmd.Parameters.Add(mechanicIdParameter);
-      cmd.ExecuteNonQuery();
-      if (conn !=null)
-      {
-        conn.Close();
-      }
-    }
+     SqlCommand cmd = new SqlCommand("DELETE FROM mechanics WHERE id = @MechanicId; DELETE FROM clients WHERE mechanic_id = @MechanicId;", conn);
+
+     SqlParameter mechanicIdParameter = new SqlParameter();
+     mechanicIdParameter.ParameterName = "@MechanicId";
+     mechanicIdParameter.Value = this.GetId();
+
+     cmd.Parameters.Add(mechanicIdParameter);
+     cmd.ExecuteNonQuery();
+
+     if (conn != null)
+     {
+       conn.Close();
+     }
+   }
 
 
     public List<Clients> GetClients()
@@ -210,10 +213,10 @@ namespace AutoRepair.Objects
       conn.Open();
 
       SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE mechanic_id = @MechanicId;", conn);
-      SqlParameter stylistIdParameter = new SqlParameter();
-      stylistIdParameter.ParameterName = "@MechanicId";
-      stylistIdParameter.Value = this.GetId();
-      cmd.Parameters.Add(stylistIdParameter);
+      SqlParameter mechanicIdParameter = new SqlParameter();
+      mechanicIdParameter.ParameterName = "@MechanicId";
+      mechanicIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(mechanicIdParameter);
       SqlDataReader rdr = cmd.ExecuteReader();
 
       List<Clients> clients = new List<Clients> {};
