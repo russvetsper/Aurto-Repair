@@ -27,7 +27,17 @@ namespace AutoRepair
       Post["/mechanic/new"] = _ => {
         Mechanic newMechanic = new Mechanic(Request.Form["mechanic-name"]);
         newMechanic.Save();
-        return View["mechanic.cshtml"];
+        return View["confirm.cshtml"];
+      };
+
+      Get["mechanic/delete/{id}"] = parameters => {
+      mechanic SelectedMechanic = mechanic.Find(parameters.id);
+      return View["mechanic_delete.cshtml", SelectedMechanic];
+      };
+      Delete["mechanic/delete/{id}"] = parameters => {
+        mechanic SelectedMechanic = mechanic.Find(parameters.id);
+        SelectedMechanic.Delete();
+        return View["confirm.cshtml"];
       };
 
 

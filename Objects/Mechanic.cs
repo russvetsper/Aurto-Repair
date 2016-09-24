@@ -186,6 +186,24 @@ namespace AutoRepair.Objects
       conn.Close();
     }
 
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand ("DELETE FROM mechanics WHERE id =@MechanicId;", conn);
+
+      SqlParameter mechanicIdParameter = new SqlParameter();
+      mechanicIdParameter.ParameterName = "@MechanicId";
+      mechanicIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(mechanicIdParameter);
+      cmd.ExecuteNonQuery();
+      if (conn !=null)
+      {
+        conn.Close();
+      }
+    }
+
+
     public List<Clients> GetClients()
     {
       SqlConnection conn = DB.Connection();
