@@ -1,0 +1,15 @@
+<h1>Add client</h1>
+
+<form action="/clients/new" method="post">
+  <label for="client-name">Client name:</label>
+  <input id="client-name" name="client-name" type="text">
+  <select name="Mechanic-id">
+    @foreach (var Mechanic in Model)
+    {
+      <option value="@Mechanic.GetId()">@Mechanic.GetName()</option>
+    }
+  </select>
+  <button type="submit">Add new client</button>
+</form>
+<p><a href="/">Back home</a></p>
+<p><a href="/clients">View clients</a></p>
