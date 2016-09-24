@@ -11,8 +11,16 @@ namespace AutoRepair
     public HomeModule()
     {
       Get["/"] = _ => {
-        return View["index.cshtml"];
+        List<Mechanic> AllMechanics = Mechanic.GetAll();
+        return View["index.cshtml", AllMechanics];
       };
+
+      Get["/mechanic"] = _ => {
+            List<Mechanic> AllMechanics = Mechanic.GetAll();
+            return View["mechanic.cshtml", AllMechanics];
+      };
+
+    
 
     }
   }
