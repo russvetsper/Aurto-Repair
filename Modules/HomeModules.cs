@@ -51,6 +51,11 @@ namespace AutoRepair
         return View["confirm.cshtml"];
       };
 
+      Get["/clients"] = _ => {
+        List<Clients> AllClients = Clients.GetAll();
+        return View["clients.cshtml", AllClients];
+      };
+
       Get["/clients/new"] = _ => {
         List<Mechanic> AllMechanics = Mechanic.GetAll();
         return View["clients_form.cshtml", AllMechanics];
@@ -62,7 +67,7 @@ namespace AutoRepair
       };
 
 
-      
+
 
 
     }
