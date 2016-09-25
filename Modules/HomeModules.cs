@@ -16,8 +16,8 @@ namespace AutoRepair
       };
 
       Get["/mechanic"] = _ => {
-            List<Mechanic> AllMechanic = Mechanic.GetAll();
-            return View["mechanic.cshtml", AllMechanic];
+        List<Mechanic> AllMechanic = Mechanic.GetAll();
+        return View["mechanic.cshtml", AllMechanic];
       };
 
       Get["/mechanic/new"] = _ => {
@@ -42,14 +42,27 @@ namespace AutoRepair
       };
 
       Get["mechanic/delete/{id}"] = parameters => {
-      Mechanic SelectedMechanic = Mechanic.Find(parameters.id);
-      return View["mechanic_delete.cshtml", SelectedMechanic];
-    };
+        Mechanic SelectedMechanic = Mechanic.Find(parameters.id);
+        return View["mechanic_delete.cshtml", SelectedMechanic];
+      };
       Delete["mechanic/delete/{id}"] = parameters => {
         Mechanic SelectedMechanic = Mechanic.Find(parameters.id);
         SelectedMechanic.Delete();
         return View["confirm.cshtml"];
-    };
+      };
+
+      Get["/clients/new"] = _ => {
+        List<Mechanic> AllMechanics = Mechanic.GetAll();
+        return View["clients_form.cshtml", AllMechanics];
+      };
+      Post["/clients/new"] = _ => {
+        Clients newClients = new Clients(Request.Form["clients-name"], Request.Form["Mechanic-id"]);
+        newClients.Save();
+        return View["confirm.cshtml"];
+      };
+
+
+      
 
 
     }
