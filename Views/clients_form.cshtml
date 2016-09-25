@@ -2,13 +2,14 @@
 
 <form action="/clients/new" method="post">
   <label for="clients-name">Client name:</label>
-  <input id="clients-name" name="clients-name" type="text">
+  <input id="clients-name" name="clients-name" type="text">|
   <select name="Mechanic-id">
     @foreach (var Mechanic in Model)
     {
       <option value="@Mechanic.GetId()">@Mechanic.GetName()</option>
     }
   </select>
+  <br>
   <button type="submit">Add new client</button>
 </form>
 <p><a href="/">Back home</a></p>
