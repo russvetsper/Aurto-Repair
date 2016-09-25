@@ -69,8 +69,7 @@ namespace AutoRepair
       Post["/clients/delete"] = _ => {
      Clients.DeleteAll();
      return View["confirm.cshtml"];
-   };
-
+      };
 
 
 
