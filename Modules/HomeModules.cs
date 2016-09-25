@@ -67,9 +67,21 @@ namespace AutoRepair
       };
 
       Post["/clients/delete"] = _ => {
-     Clients.DeleteAll();
-     return View["confirm.cshtml"];
+        Clients.DeleteAll();
+        return View["confirm.cshtml"];
       };
+
+      Get["/mechanic/{id}"] = parameters => {
+       Dictionary<string, object> model = new Dictionary<string, object>();
+       var SelectedMechanic = Mechanic.Find(parameters.id);
+       var MechanicClients = SelectedMechanic.GetClients();
+       model.Add("mechanics", SelectedMechanic);
+       model.Add("clients", MechanicClients);
+       return View["mechanic_clients.cshtml", model];
+     };
+
+
+
 
 
 
