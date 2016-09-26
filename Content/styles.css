@@ -1,0 +1,46 @@
+body {
+  background-color: #4682B4;
+}
+
+h1 {
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+  font-family: serif;
+  text-decoration: underline;
+	color: #FFFAF0;
+	font-size: 100px;
+  animation-duration: 5s;
+ animation-name: slidein;
+}
+
+@keyframes slidein {
+ from {
+   margin-left: 100%;
+   width: 300%;
+ }
+
+ to {
+   margin-left: 0%;
+   width: 80%;
+ }
+}
+
+.jumbotron  {
+
+  margin-top:70px;
+  margin-bottom:70px;
+  padding: 1.5em 1.6em;
+  border-radius: 100px;
+}
+
+
+
+.index{
+  height:50;
+  width:200px;
+}
+
+.content {
+  width:100%; height:37%;
+
+  background-image:url('http://www.clipartkid.com/images/206/contact-information-for-jp-foreign-car-repair-KInZJK-clipart.JPG');
+}
