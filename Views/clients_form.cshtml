@@ -1,16 +1,27 @@
-<h1>Add client</h1>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="../Content/styles.css" >
+<h1>Auto-Repair</h1>
+<hr WIDTH="100%">
+<h2>Add client</h2>
 
 <form action="/clients/new" method="post">
-  <label for="clients-name">Client name:</label>
-  <input id="clients-name" name="clients-name" type="text">|
-  <select name="Mechanic-id">
-    @foreach (var Mechanic in Model)
-    {
-      <option value="@Mechanic.GetId()">@Mechanic.GetName()</option>
-    }
-  </select>
-  <br>
-  <button type="submit">Add new client</button>
+<label for="clients-name">Client name:</label>
+<input id="clients-name" name="clients-name" type="text">|
+<select name="Mechanic-id">
+  @foreach (var Mechanic in Model)
+  {
+    <option value="@Mechanic.GetId()">@Mechanic.GetName()</option>
+  }
+</select>
+<br>
+<br>
+<br>
+<br>
+<br>
+<button type="submit">Add new client</button>
 </form>
-<p><a href="/">Back home</a></p>
-<p><a href="/clients">View clients</a></p>
+<br>
+<br>
+
+<p href="/"><button>Back home</button></p>
+<p href="/clients"><button>View clients</button></p>

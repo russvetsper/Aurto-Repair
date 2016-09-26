@@ -1,10 +1,16 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<body style="background-color:red;">
 <h1>Auto-Repair</h1>
 <hr WIDTH="100%">
-<h3>Delete?</h3>
+<div class="container">
+<h2>Delete?</h2>
 
-<h4>@Model.GetName()</h4>
+<img src="http://www.freeiconspng.com/uploads/delete-icon-5.png" alt="x" style="width:width;height:height;">
+<h1>@Model.GetName()</h1>
 <form action="/mechanic/delete/@Model.GetId()" method="post">
   <input type="hidden" name="_method" value="DELETE">
   <button type="submit">Delete</button>
 </form>
-<p><a href="/">Back home</a></p>
+</div>
+<a href="/"><button>Back home</button></a>
+</body>

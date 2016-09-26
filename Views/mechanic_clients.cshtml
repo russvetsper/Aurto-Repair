@@ -1,19 +1,29 @@
-<h1>Client for the Mechanic.</h1>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="../Content/styles.css" >
 
-  @if (@Model["clients"].Count == 0)
-  {
-    <p>No Clients Added</p>
+<h1>Auto-Repair</h1>
+<hr WIDTH="100%">
+<br>
+
+<h2>Client for the Mechanic.</h2>
+
+@if (@Model["clients"].Count == 0)
+{
+  <p>No Clients Added</p>
 
 
-  }
-  else
-  {
-    <ol>
-      @foreach (var clients in @Model["clients"])
-      {
-        <li>@clients.GetName()</li>
-      }
-    </ol>
-  }
-  <p><a href="/clients/new">Add Client</a></p>
-  <p><a href="/">Home</a>
+}
+else
+{
+  <ol>
+    @foreach (var clients in @Model["clients"])
+    {
+      <h4><li>@clients.GetName()</li></h4>
+    }
+  </ol>
+}
+<br>
+<a href="/clients/new"><button>Add Client</button></a>
+<br>
+<br>
+<a href="/"><button>Home</button></a>

@@ -1,18 +1,27 @@
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="../Content/styles.css" >
+<h1>Auto-Repair</h1>
+<hr WIDTH="100%">
 <h2>Mechanic:</h2>
-<ol>
-  @if (Model.Count != 0)
+@if (Model.Count != 0)
+{
+  @foreach (var Mechanic in Model)
   {
-    @foreach (var Mechanic in Model)
-    {
+    <div class="mechanic">
+    <ol>
+    <li>
+      <h3><a href="/Mechanic/@Mechanic.GetId()">@Mechanic.GetName()</a></h3>
+      <a href="/Mechanic/edit/@Mechanic.GetId()">Edit</a>
+      <br>
+      <a href="Mechanic/delete/@Mechanic.GetId()">Delete</a>
+    </li>
+  </ol>
+</div>
 
-      <li><h3><a href="/Mechanic/@Mechanic.GetId()">@Mechanic.GetName()</a></h3>
-        <a href="/Mechanic/edit/@Mechanic.GetId()">Edit</a><br>
-        <a href="Mechanic/delete/@Mechanic.GetId()">Delete</a>
-      </li>
-
-    }
   }
-</ol>
-<h4><a href="/Mechanic/new">Add new Mechanic</a></h4>
-<h4><a href="/">Return home</a></h4>
+}
+<br>
+<a href="/Mechanic/new"><button>Add new Mechanic</button></a>
+<br>
+<br>
+<a href="/"><button>Return home</button></a>
